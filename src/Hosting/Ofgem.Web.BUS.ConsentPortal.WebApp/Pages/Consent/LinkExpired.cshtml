@@ -1,0 +1,48 @@
+﻿@page "/link-expired"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.LinkExpiredModel
+@{
+    ViewData["Title"] = "Link has expired";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 id="page-heading" class="govuk-heading-l">You cannot continue</h1>
+
+            <p class="govuk-body">We’ve rejected this application.</p>
+
+            @if (Model.ConsentRequestSummary != null)
+            {
+                <p class="govuk-body">It’s been more than 14 calendar days since we asked you to consent to @Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName) submitting a Boiler Upgrade Scheme application for:</p>
+
+                <p class="govuk-body">
+                    @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine1)<br>
+                    @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine2))
+                    {
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine2)
+
+                        <br>
+                    }
+                    @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine3))
+                    {
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine3)
+
+                        <br>
+                    }
+                    @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressCounty))
+                    {
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressCounty)
+
+                        <br>
+                    }
+                    @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressPostcode)
+                </p>
+
+                <p class="govuk-body">If you still want @Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName) to proceed on your behalf, they must submit a new BUS grant application.</p>
+            }
+
+            <a id="finish_button" href="https://www.ofgem.gov.uk/environmental-and-social-schemes/boiler-upgrade-scheme-bus" 
+            class="govuk-button" data-module="govuk-button">Finish</a>
+
+        </div>
+    </div>

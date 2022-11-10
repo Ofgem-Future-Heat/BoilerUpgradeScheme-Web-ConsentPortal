@@ -1,0 +1,62 @@
+﻿@page "/consent-already-given"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.AlreadyGivenModel
+@{
+    ViewData["Title"] = "You have already given your consent";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            
+            <h1 id="page-heading" class="govuk-heading-l">
+                You have already given your consent
+            </h1>
+
+            <p class="govuk-body">According to our records, you've already given your consent for an installer to submit a Boiler Upgrade Scheme
+                (BUS) grant application for:</p>
+
+            <p class="govuk-body" id="consent-already-given-address">
+                <span id="consent-already-given-address-line1">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine1)</span><br>
+                @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine2))
+                {
+                    <span id="consent-already-given-address-line2">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine2)</span><br>
+                }
+                @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine3))
+                {
+                    <span id="consent-already-given-address-line3">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine3)</span><br>
+                }
+                @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressCounty))
+                {
+                    <span id="consent-already-given-address-county">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressCounty)</span><br>
+                }
+                <span id="consent-already-given-address-postcode">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressPostcode)</span>
+            </p>
+
+            <p class="govuk-body">
+                If you've changed your mind, you’ll need to ask the installer to cancel the application. After they’ve done this,
+                you’ll be able to ask a different installer to apply for you.
+            </p>
+
+            <details class="govuk-details" data-module="govuk-details">
+              <summary id="withdraw-consent-summary" class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  I want to withdraw my consent
+                </span>
+              </summary>
+              <div id="withdraw-consent-details" class="govuk-details__text">
+                <p class="govuk-body"> You can withdraw your consent for an installer to make a grant application at any point until they have commissioned the 
+                    new heating system (that is, installed it and checked it works properly).  
+                  <p class="govuk-body">Withdrawing consent is not linked to any contractual arrangements you may or may not have made with your chosen installer.
+                      These arrangements are outside of Ofgem’s remit.</p>
+                  <p class="govuk-body">Contact the BUS support team at Ofgem:</p>
+                </p> 
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Email: <a id="BUS_email" class="govuk-link" href="mailto:BUS.application@ofgem.gov.uk">BUS.application@ofgem.gov.uk</a></li>
+                  <li id="bus-telephone">Tel: 0330 053 2006</li>
+                </ul>  
+                <p class="govuk-body">You will need to quote the application reference number, which is in the email you received from us.</p>  
+              </div>
+            </details>
+            <a id="finish_button" href="https://www.ofgem.gov.uk/environmental-and-social-schemes/boiler-upgrade-scheme-bus" 
+            class="govuk-button" data-module="govuk-button">Finish</a>
+        </div>
+    </div>

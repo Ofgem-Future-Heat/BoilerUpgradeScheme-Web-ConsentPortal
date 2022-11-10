@@ -1,0 +1,101 @@
+﻿@page "/give-feedback"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.GiveFeedbackModel
+@{
+    ViewData["Title"] = "Give feedback on the Boiler Upgrade Scheme";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+        <h1 id="page-heading" class="govuk-heading-xl">Give feedback on the Boiler Upgrade Scheme </h1>
+        @if (Model.ErrorMessages is not null && Model.ErrorMessages.Any())
+        {
+            <div id="error-summary-div" class="govuk-error-summary govuk-!-width-two-thirds" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                <h2 id="error-summary-heading" class="govuk-error-summary__title">
+                    There is a problem
+                </h2>
+                <div id="error-summary-body" class="govuk-error-summary__body">
+                        <ul id="error-summary-list-container" class="govuk-list govuk-error-summary__list">
+                            @foreach (var item in ViewContext.ViewData.ModelState) 
+                            {
+                                if (item.Value.Errors.Any())
+                                {
+                                    string href = $"{item.Key}Heading";
+                                    string listItemId = $"{item.Key}-error-list-item";
+
+                                    <li id="@listItemId">
+                                        <a class="govuk-error-message" href="#@href">
+                                            @string.Join(" ", item.Value.Errors.Select(x => x.ErrorMessage).ToList())
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+            </div>
+        }
+
+            <h2 class="govuk-heading-m">Satisfaction survey</h2>
+
+            <form method = "post">
+                <div class="govuk-form-group">
+                <fieldset aria-describedby="survey-option-error">
+                        <legend class="govuk-fieldset__legend govuk-!-font-weight-bold">
+                            Overall, how do you feel about the process of consenting to a Boiler Upgrade Scheme application?
+                        </legend>
+                        <span asp-validation-for="SurveyOption" id="survey-option-error" class="govuk-error-message"></span>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="feedback-1" asp-for="SurveyOption" type="radio" value="1">
+                            <label class="govuk-label govuk-radios__label" for="feedback-1">
+                                    Very satisfied
+                                </label>
+                             </div>
+                             <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="feedback-2" asp-for="SurveyOption" type="radio" value="2">
+                            <label class="govuk-label govuk-radios__label" for="feedback-2">
+                                    Satisfied
+                                </label>
+                             </div>
+                             <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="feedback-3" asp-for="SurveyOption" type="radio" value="3">
+                            <label class="govuk-label govuk-radios__label" for="feedback-3">
+                                    Neither satisfied nor dissatisfied
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="feedback-4" asp-for="SurveyOption" type="radio" value="4">
+                            <label class="govuk-label govuk-radios__label" for="feedback-4">
+                                    Dissatisfied
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="feedback-5" asp-for="SurveyOption" type="radio" value="5">
+                            <label class="govuk-label govuk-radios__label" for="feedback-5">
+                                    Very dissatisfied
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="1200">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-!-font-weight-bold" for="with-hint">
+                        How could we improve this service? (optional)
+                      </label>
+                      <div id="with-hint-hint" class="govuk-hint">
+                        Do not include personal or financial information, for example your National Insurance or credit card numbers
+                      </div>
+                      <textarea class="govuk-textarea govuk-js-character-count" asp-for="FeedbackNarrative" id="with-hint"  rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+                    </div>
+          
+                    <div id="with-hint-info" class="govuk-hint govuk-character-count__message">
+                      You can enter up to 1200 characters
+                    </div>
+                </div>
+
+                <input id="send-feedback-button" type="submit" value="Send feedback" class="govuk-button"/>
+            </form>
+        </div>
+    </div>

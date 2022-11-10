@@ -1,0 +1,36 @@
+﻿@page
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Shared.RoutingErrorModel
+@{
+    ViewData["Title"] = "Error Page";
+}
+
+<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            @if(!@Model.ErrorPageContent.Any())
+            {
+                <h1 id="title_id" class="govuk-heading-l">Sorry, there is a problem with the service</h1>
+                <p class="govuk-body">Try again later.</p>
+                <p class="govuk-body">If you continue to have issues, you can contact Ofgem at:</p>
+            }
+            else
+            {
+               <h1 id="title_id" class="govuk-heading-l">@Model.ErrorTitle</h1>
+            
+                @foreach (var text in @Model.ErrorPageContent)
+                {
+                    <p class="govuk-body">@text</p>
+                } 
+            }
+            <ul class="govuk-list govuk-list--bullet">
+                <li>Email: <a id="BUS_email" href="mailto:BUS.enquiry@ofgem.gov.uk">BUS.enquiry@ofgem.gov.uk</a></li>
+                <li id="telephone_id">Tel: 0330 053 2006</li>
+            </ul>
+
+            <a id="error_finish_button" href="https://www.ofgem.gov.uk/environmental-and-social-schemes/boiler-upgrade-scheme-bus" 
+            class="govuk-button" data-module="govuk-button">Finish</a>
+
+        </div>
+    </div>
+</main>

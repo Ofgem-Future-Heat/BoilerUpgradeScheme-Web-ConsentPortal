@@ -1,0 +1,111 @@
+﻿@page "/declare-eligibility"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.DeclarationModel
+@{
+    ViewData["Title"] = "Declare your eligibility";
+}
+@section breadcrumbs{
+    <a class="govuk-back-link" asp-page="./EpcConfirmation">Back</a>
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+        @if (Model.DisplayError)
+        {
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                <h2 class="govuk-error-summary__title" id="error-summary-title">
+                    There is a problem
+                </h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                            <li>
+                            <a href="#OwnerAgreed">You must confirm you meet all the eligibility criteria</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        }
+
+            <h1 id="page-heading" class="govuk-heading-l">Declare your eligibility for the Boiler Upgrade Scheme</h1>
+
+            <p class="govuk-body">Before we process this application, you must confirm your eligibility for the Boiler Upgrade Scheme (BUS).</p>
+
+
+            <form method="post">
+
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="declaration-error">
+                        <legend class="govuk-fieldset__legend">
+
+                            <h2 class="govuk-heading-m">Declaration</h2>
+                        </legend>
+                        <p class="govuk-body">
+                            With regards to @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine1),
+                            @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressPostcode), I confirm that:
+                        </p>
+                        <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                @if (Model.DisplayError)
+                                {
+                                    <p id="declaration-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span> You must confirm you meet all the eligibility criteria
+                                    </p>
+                                }
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                            <input type="checkbox" class="govuk-checkboxes__input" asp-for="@Model.OwnerAgreed" aria-describedby="@(Model.DisplayError ? "declaration-error": null)" />
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="OwnerAgreed">
+                                    I will become the owner (or co-owner) of the new heating system after it is installed.
+                                </label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" asp-for="@Model.FundingAgreed" type="checkbox" aria-describedby="@(Model.DisplayError ? "declaration-error": null)">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="FundingAgreed">
+                                    I have not received a grant from public funds to cover any of the purchase or installation costs of the heat pump or biomass boiler.
+                                </label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" asp-for="@Model.NotFundedByEnergyCompanyObligationAgreed" type="checkbox" aria-describedby="@(Model.DisplayError ? "declaration-error": null)">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="NotFundedByEnergyCompanyObligationAgreed">
+                                    The heat pump or biomass boiler has not been funded by the Energy Company Obligation (ECO), whereby energy suppliers promote measures that improve the ability of low income, fuel poor and vulnerable households to heat their homes.
+                                </label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" asp-for="@Model.SocialHousingAgreed" type="checkbox" aria-describedby="@(Model.DisplayError ? "declaration-error": null)">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="SocialHousingAgreed">
+                                    The property is not being used to provide social housing.
+                                </label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" asp-for="@Model.SubjectToAuditAgreed" type="checkbox" aria-describedby="@(Model.DisplayError ? "declaration-error": null)">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="SubjectToAuditAgreed">
+                                    I am aware that the details I've confirmed on this application, as well as the new heating system at my property, may be subject to audit as part of Ofgem's approach to managing fraud and non-compliance.
+                                </label>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <details class="govuk-details" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            What is meant by ‘social housing’?
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">This scheme defines social housing as any rental or owned accommodation that’s provided at lower than market value to people that 
+                            could not have afforded it otherwise. It includes arrangements like shared ownership.</p>
+                       
+                        <p class="govuk-body">For a full definition, see <a target="_blank" class="govuk-link" href="https://www.legislation.gov.uk/ukpga/2008/17/section/68">Section 68 of the Housing and Regeneration Act 2008 (opens in a new window or tab)</a></p>
+                    </div>
+                </details>
+
+                <feature name="@FeatureFlags.ConsentFinish">
+                    <input id="continue-button" type="submit" value="Confirm and continue" class="govuk-button"/>
+                </feature>
+            </form>
+
+
+        </div>
+    </div>

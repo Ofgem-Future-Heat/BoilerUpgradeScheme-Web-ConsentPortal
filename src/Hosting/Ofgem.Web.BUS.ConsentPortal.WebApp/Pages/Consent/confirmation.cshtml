@@ -1,0 +1,48 @@
+﻿@page "/consent-received"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.ConfirmationModel
+@{
+    ViewData["Title"] = "Consent received";
+}
+
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <div class="govuk-panel govuk-panel--confirmation">
+            <h1 id="page-heading" class="govuk-panel__title govuk-!-margin-top-7 govuk-!-margin-bottom-7">
+                    Consent received
+                </h1>
+
+            </div>
+            <br>
+            <h2 class="govuk-heading-m">What happens next</h2>
+
+            <p class="govuk-body">You don’t need to do anything else.</p>
+
+            <p class="govuk-body">
+                We'll assess <span id="Dynamic_installer_name">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName)</span>'s 
+                application as quickly as we can, and let them know the outcome by email.
+            </p>
+
+            <h2 class="govuk-heading-m">Get support</h2>
+
+            <p class="govuk-body">If you have any questions about the installation of your new heating system, you’ll need to speak to your installer. </p>
+
+            <p class="govuk-body">
+            If you ever have problems with your installer, visit the <a id="link_to_mcscertified" class="govuk-link govuk-link--no-visited-state" href="https://mcscertified.com" target="_blank">
+                Microgeneration Certification Scheme (MCS) website (opens in a new window or tab)</a> and read ‘What to do when things go wrong’, which includes information
+                on when and how to engage with the consumer codes.
+            </p>
+
+            <p class="govuk-body">For anything related to the Boiler Upgrade Scheme (BUS), contact the BUS support team at Ofgem:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+            <li>Email: <a id="BUS_email" class="govuk-link govuk-link--no-visited-state" href="mailto:BUS.enquiry@ofgem.gov.uk">BUS.enquiry@ofgem.gov.uk</a></li>
+                <li id="bus-telephone">Tel: 0330 053 2006</li>
+            </ul>
+
+            <h2 class="govuk-heading-m">Give feedback</h2>
+        <p class="govuk-body"><a href="/give-feedback" id="give-feedback-link" class="govuk-link govuk-link--no-visited-state">What did you think of this service?</a> (takes 30 seconds)</p>
+
+        </div>
+    </div>

@@ -1,0 +1,155 @@
+﻿@page "/verify"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.Consent.DetailsModel
+@{
+    ViewData["Title"] = "Give consent";
+}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+        @if (Model.DisplayError)
+        {
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                <h2 class="govuk-error-summary__title" id="error-summary-title">
+                    There is a problem
+                </h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        @if (!Model.UserConfirmsIsNamedOwner)
+                        {
+                            <li>
+                            <a href="#confirm-name-checkbox">
+                                You must check the box to confirm your name and that you own (or co-own) the property at the installation address
+                                </a>
+                            </li>
+                        }
+                        @if (!Model.ConsentAgreed)
+                        {
+                            <li>
+                            <a href="#give-consent-checkbox">
+                                You must check the box to give your consent
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+
+            <h1 id="page-heading" class="govuk-heading-l">Give consent for @Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName) to apply to the Boiler Upgrade Scheme on your behalf</h1>
+
+            <h2 class="govuk-heading-m">Application details</h2>
+
+            <p class="govuk-body">@Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName) has made an application to the Boiler Upgrade Scheme (BUS) with the following details:</p>
+
+            <table class="govuk-summary-list govuk-!-margin-bottom-9">
+                <tbody >
+                    <tr class="govuk-summary-list__row">
+                        <th class="govuk-summary-list__key">Property owner name</th>
+                    <td class="govuk-summary-list__value">                        
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.OwnerFullName)
+                    </td>
+                    </tr>
+                <tr class="govuk-summary-list__row">
+                    <th class="govuk-summary-list__key">Installation address</th>
+                    <td class="govuk-summary-list__value">
+                        @*Did try using comma instead of break but it messed with the curly brackets*@
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine1) <br/>
+                        @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine2))
+                        {
+                            @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine2)
+                            <br/>
+                        }
+                        @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressLine3))
+                        {
+                            @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressLine3)
+                            <br/>
+                        }
+                        @if (!String.IsNullOrEmpty(@Model.ConsentRequestSummary.InstallationAddressCounty))
+                        {
+                            @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressCounty)
+                            <br/>
+                        }
+                        @Html.DisplayFor(model => model.ConsentRequestSummary.InstallationAddressPostcode)
+                    </td>
+                </tr>
+                <tr class="govuk-summary-list__row">
+                    <th class="govuk-summary-list__key">Type of heating</th>
+                    <td class="govuk-summary-list__value">@Html.DisplayFor(model => model.ConsentRequestSummary.TechnologyType)</td>
+                </tr>
+                <tr class="govuk-summary-list__row">
+                    <th class="govuk-summary-list__key">Installer’s full quote (including VAT)</th>
+                    <td class="govuk-summary-list__value">£@Html.DisplayFor(model => model.ConsentRequestSummary.QuoteAmount)</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        This information is not correct
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">If you wish to dispute any of this information, contact the BUS support team at Ofgem:</p>
+                    <ul>
+                        <li>Email: <a class="govuk-link" href="mailto:BUS.application@ofgem.gov.uk">BUS.application@ofgem.gov.uk</a></li>
+                        <li>Tel: 0330 053 2006</li>
+                    </ul>
+                    <p class="govuk-body">You will need to quote the application reference number, which is on the email you received from us.</p>
+                </div>
+            </details>
+
+            <h2 class="govuk-heading-m">Confirmation</h2>
+
+            <form method="post">
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        @*<input type="hidden" asp-for="ConsentRequestSummary.ApplicationReferenceNumber" />*@
+
+
+                        <div class="govuk-checkboxes__item">
+                        @if (Model.DisplayError)
+                        {
+                            if (!Model.UserConfirmsIsNamedOwner)
+                            {
+                                <p id="declaration-error-name-not-confirmed" class="govuk-error-message govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                                    <span class="govuk-visually-hidden">Error:</span> You must check the box to confirm your name and that you own (or co-own) the property at the installation address
+                                </p>
+                            }
+                        }
+                        
+                        </div>
+                        <div class="govuk-checkboxes__item">
+
+                        <input id="confirm-name-checkbox" type="checkbox" class="govuk-checkboxes__input" asp-for="@Model.UserConfirmsIsNamedOwner" aria-describedby="@(!Model.UserConfirmsIsNamedOwner && Model.DisplayError ? "declaration-error-name-not-confirmed": null)" />
+                        <label class="govuk-label govuk-checkboxes__label" for="confirm-name-checkbox">
+                                I am @Html.DisplayFor(model => model.ConsentRequestSummary.OwnerFullName) and I own (or co-own) the property at the installation address.
+                            </label>
+                        </div>
+
+                        <div class="govuk-checkboxes__item">
+                        @if (Model.DisplayError)
+                        {
+                            if (!Model.ConsentAgreed)
+                            {
+                                <p id="declaration-error-no-consent" class="govuk-error-message govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                                    <span class="govuk-visually-hidden">Error:</span> You must check the box to give your consent
+                                </p>
+                            }
+                        }
+                    </div>
+                    <div class="govuk-checkboxes__item">
+
+                        <input id="give-consent-checkbox" type="checkbox" class="govuk-checkboxes__input" asp-for="@Model.ConsentAgreed" aria-describedby="@(!Model.ConsentAgreed && Model.DisplayError ? "declaration-error-no-consent": null)" />
+                        <label class="govuk-label govuk-checkboxes__label" for="give-consent-checkbox">
+                                I consent to @Html.DisplayFor(model => model.ConsentRequestSummary.InstallerName) making a Boiler Upgrade Scheme application for this installation. I also confirm, as owner (or co-owner) of the property at the installation address, that I have the authority to give this consent (on behalf of all co-owners, where applicable).
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            <input id="continue-button" type="submit" value="Confirm and continue" class="govuk-button" />
+
+            </form>
+        </div>
+    </div>

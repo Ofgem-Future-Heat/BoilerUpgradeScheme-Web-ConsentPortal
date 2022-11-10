@@ -1,0 +1,184 @@
+﻿@page "/epc-confirmation"
+@model Ofgem.Web.BUS.ConsentPortal.WebApp.Pages.consent.EpcConfirmationModel
+@{
+    ViewData["Title"] = "Your property's EPC";
+}
+@section breadcrumbs{
+    <a class="govuk-back-link" asp-page="./details" asp-route-token="@HttpContext.Session.GetString("Token")">Back</a>
+}
+
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+        @if (Model.EpcDeclarationError || Model.EPCMeetsEligibilityError)
+        {
+            <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                <h2 class="govuk-error-summary__title" id="error-summary-title">
+                    There is a problem
+                </h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        @if (Model.EPCMeetsEligibilityError)
+                        {
+                            <li>
+                                <a href="#epc_eligibility_checkbox">
+                                    You must check the box to confirm that one of the EPC eligibility scenarios is true
+                                </a>
+                            </li>
+                        }
+                        @if (Model.EpcDeclarationError)
+                        {
+                            <li>
+                                <a href="#epc_declaration_checkbox">
+                                    You must check the box to confirm you understand the implications of not meeting the EPC eligibility criteria
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+
+            <h1 id="page-heading" class="govuk-heading-l">Your property's energy performance certificate (EPC)</h1>
+
+            <p class="govuk-body">In reviewing your installer's application for a Boiler Upgrade Scheme (BUS) grant, we check that your property has an EPC report:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>issued within the last 10 years</li>
+                <li>with no recommendations for loft or cavity wall insulation</li>
+            </ul>
+
+            <p class="govuk-body">You can <a id="find_energy_cert_link" class="govuk-link" href="https://www.gov.uk/find-energy-certificate" target="_blank">check your property's current EPC report (opens in a new window or tab)</a></p>
+
+
+            <h2 class="govuk-heading-s">Exemptions for some 'self builds'</h2>
+
+            <p class="govuk-body">We do not check EPC reports for new properties that:</p>
+
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>have mostly been built using your own labour or resources</li>
+                <li>won't be occupied before the new heating system is installed</li>
+            </ul>
+
+            <h2 class="govuk-heading-s">Exemptions to the loft and cavity wall insulation requirements </h2>
+
+
+            <p class="govuk-body">
+                There are some exemptions to the loft and cavity wall insulation requirements. If your property is exempt, you should have
+                already given evidence of this to your installer so that they can submit the application. If not, they can advise you further.
+            </p>
+
+
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        List of exemption scenarios
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">Your property is exempt from the loft and cavity wall insulation requirements if:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>it is affected by atypical local environment conditions, such as regular exposure to driving rain</li>
+                        <li>
+                            it is not feasible to install loft or cavity wall insulation due to the structure of the property, for example the
+                            house has a steel or timber frame
+                        </li>
+                        <li>installing loft or cavity wall insulation would harm protected wildlife</li>
+                        <li>it is in a conservation area</li>
+                        <li>it is a listed building</li>
+                        <li>installing loft or cavity wall insulation would be unlawful</li>
+                    </ul>
+
+                </div>
+            </details>
+
+
+
+            <form method="post">
+
+            <div class="govuk-form-group">
+                <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Confirmation of EPC eligibility
+
+                    </legend>
+                        <p class="govuk-body">You must confirm that one of the following is true:</p>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    My property already has a valid EPC report
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    My property has an EPC report from the last 10 years with no recommendations for loft or cavity wall insulation.
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    My property is an eligible self build
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    I've built my property mostly with my own labour or resources, and it will not be occupied before the new heating system is installed.
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    My property's EPC report recommends loft or cavity wall insulation
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    My property has an EPC report from the last 10 years that has recommendations for loft or cavity wall insulation. It's not exempt from these recommendations. I'll make sure I've installed the required insulation - and arranged a new EPC to reflect this - by the time my installer claims the BUS grant at the end of the project.
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    My property is exempt from the loft and cavity wall insulation requirements
+                                </dt>
+                                <dd class="govuk-summary-list__value">
+                                    My property has an EPC report from the last 10 years that has recommendations for loft or cavity wall insulation. It's exempt from these recommendations, and I've already given evidence of this to my installer (or intend to do so).
+                                </dd>
+                            </div>
+                        </dl>
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item" aria-describedby="epc_eligibility_error">
+                            @if (Model.EPCMeetsEligibilityError)
+                            {
+                                <p id="epc_eligibility_error" class="govuk-error-message govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                                    <span class="govuk-visually-hidden">Error:</span>
+                                    You must check the box to confirm that one of the EPC eligibility scenarios is true
+                                </p>
+                            }
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input id="epc_eligibility_checkbox" class="govuk-checkboxes__input" asp-for="@Model.EPCMeetsEligibility" aria-describedby="@(Model.EPCMeetsEligibilityError ? "epc_eligibility_error": null)" type="checkbox">
+                            <label class="govuk-label govuk-checkboxes__label" for="epc_eligibility_checkbox">
+                                I confirm that one of these scenarios is true.
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            @if (Model.EpcDeclarationError)
+                            {
+                                <p id="epc_declaration_error" class="govuk-error-message govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                                    <span class="govuk-visually-hidden">Error:</span>
+                                    You must check the box to confirm you understand the implications of not meeting the EPC eligibility criteria
+                                </p>
+                            }
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                            <input id="epc_declaration_checkbox" class="govuk-checkboxes__input" asp-for="@Model.EpcDeclaration" type="checkbox" aria-describedby="@(Model.EpcDeclarationError ? "epc_declaration_error": null)">
+                            <label class="govuk-label govuk-checkboxes__label" for="epc_declaration_checkbox">
+                                I understand that if none of these scenarios is true, my installer may not receive the BUS grant, and may seek to recover the shortfall from me (and any other co-owner).
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button id="continue-button" class="govuk-button" data-module="govuk-button">
+                Confirm and continue
+            </button>
+
+        </form>
+
+
+        </div>
+    </div>
